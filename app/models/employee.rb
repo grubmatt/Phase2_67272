@@ -6,9 +6,9 @@ class Employee < ActiveRecord::Base
   # Scopes
   # -----------------------------
   # Returns employees under 18
-  scope :younger_than_18, -> { where("date_of_birth > ?", Date.now - 18.years) }
+  scope :younger_than_18, -> { where("date_of_birth > ?", 18.years.ago) }
   # Returns employees older then 18
-  scope :18_or_older, -> { where("date_of_birth <= ?", Date.now - 18.years) }
+  scope :'18_or_older', -> { where("date_of_birth < ?", 18.years.ago) }
   # Returns active employess
   scope :active, -> { where("active = true") }
   # Returns inactive employees

@@ -12,5 +12,11 @@ class Store < ActiveRecord::Base
   # Orders results alphabetically
   scope :alphabetical, -> { order("name ASC") }
 
+  # Validations
+  # -----------------------------
+  # make sure required fields are present
+  validates_presence_of :name, :street, :zip
+  # State must be PA, OH, or WV
+  validates_inclusion_of :state, in: %w[PA OH WV], message: "is not an option", allow_blank: true
 
 end
