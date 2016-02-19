@@ -7,7 +7,7 @@ class Assignment < ActiveRecord::Base
   # Scopes
   # -----------------------------
   # Gets current assignments
-  scope :current, -> { where("active = true") }
+  scope :current, -> { where(active: true) }
   # Returns all assignments for a given store
   scope :for_store, ->(store_id) { where("store_id = ?", store_id) }
   # Returns al assignments for a given employee
@@ -15,9 +15,9 @@ class Assignment < ActiveRecord::Base
   # Return all asinments for a given pay level
   scope :for_pay_level, ->(pay_level) { where("pay_level = ?", pay_level) }
   # Return all values ordered by pay level
-  scope :by_pay_level, -> { order('pay_level ASC') }
+  scope :by_pay_level, -> { order('pay_level') }
   # Return all values ordered by store
-  scope :by_store, -> { order('store_id ASC') }
+  scope :by_store, -> { order('store_id') }
 
   # Validations
   # -----------------------------

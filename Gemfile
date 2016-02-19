@@ -29,6 +29,34 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+# Additional gems that are very useful in Rails development
+group :development do
+  gem 'quiet_assets'
+  gem 'thin'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+  gem 'wirble'
+  gem 'hirb'
+  gem 'populator3'
+  gem 'faker'
+end
+
+# Gems used only in testing
+group :test do
+  gem 'shoulda'
+  gem 'shoulda-matchers'
+  gem 'minitest'
+  gem 'minitest-rails'
+  gem 'minitest-reporters'
+  gem 'minitest-perf'
+  gem 'factory_girl_rails'
+  gem 'mocha'
+  gem 'nokogiri'
+  gem 'simplecov'
+  gem 'single_test'
+end
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
