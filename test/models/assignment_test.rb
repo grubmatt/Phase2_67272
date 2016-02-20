@@ -1,7 +1,9 @@
 require 'test_helper'
 
 class AssignmentTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  # Relationship macros
+   should belong_to(:stores)
+   should belong_to(:employees)
+
+   # Validation macros
 end

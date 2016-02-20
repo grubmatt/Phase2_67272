@@ -55,7 +55,7 @@ class StoreTest < ActiveSupport::TestCase
 
     # test the scope 'alphabetical'
     should "shows that there are three stores in alphabetical order" do
-      assert_equal ["CMU", "PITT", "MARS TWP"], Store.alphabetical.map{|o| o.name}
+      assert_equal ["CMU", "MARS TWP", "PITT"], Store.alphabetical.map{|o| o.name}
     end
 
     # test the scope 'active'
@@ -67,7 +67,7 @@ class StoreTest < ActiveSupport::TestCase
     # test the scope 'inactive'
     should "shows that there is one inactive stores" do
       assert_equal 1, Store.inactive.size
-      assert_equal ["MARS TWP"], Store.active.map{|o| o.name}.sort
+      assert_equal ["MARS TWP"], Store.inactive.map{|o| o.name}
     end
 
     # test the callback is working 'reformat_phone'

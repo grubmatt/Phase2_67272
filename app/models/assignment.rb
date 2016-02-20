@@ -1,6 +1,6 @@
 class Assignment < ActiveRecord::Base
   # create a callback that ends the previous assignment
-  #before_save :end_previous_assignment
+  before_save :end_previous_assignment
 
   # Relationships
   # -----------------------------
@@ -10,9 +10,9 @@ class Assignment < ActiveRecord::Base
   # Scopes
   # -----------------------------
   # Gets current assignments
-  scope :current, -> { where(active: true) }
+  scope :current, -> { where("end_date = ?", nil) }
   # Gets past assignments
-  scope :past, -> { where(active: false) }
+  scope :past, -> { where("end_date != ?", nil) }
   # Returns all assignments for a given store
   scope :for_store, ->(store_id) { where("store_id = ?", store_id) }
   # Returns al assignments for a given employee
@@ -22,7 +22,7 @@ class Assignment < ActiveRecord::Base
   # Return all assignments for a given role
   scope :for_role, ->(role) { where("role = ?", role) }
   # Return all values ordered by store
-  scope :by_store, -> { order('store_id') }
+  scope :by_store, -> { joins(:store).order('store.name') }
   # Return all values ordered by employee name
   scope :by_employee, -> { joins(:employee).order("employee.last_name, employee.first_name") }
   # Return assignments in chronological order
@@ -33,12 +33,26 @@ class Assignment < ActiveRecord::Base
   # -----------------------------
   # make sure required fields are present
   validates_presence_of :store_id, :employee_id, :start_date, :pay_level
+  validate :employee_store_are_active
 
   # Callback Code
   def end_previous_assignment
-    current_assignment = assignments.current.for_employee(self.employee_id)
+    current_assignment = Assignment.for_employee(self.employee_id).current
     current_assignment.end_date = self.start_date
-    current_assignment.active = false
   end
 
+  private
+  def employee_store_are_active
+    all_employee_ids = Employee.active.all.map{|i| i.id}
+    all_store_ids = Store.active.all.map{|i| i.id}
+    unless all_employee_ids.include?(self.employee_id)
+      errors.add(:employee, "is not an active employee")
+      return false
+    end
+    unless all_store_ids.include?(self.store_id)
+      errors.add(:store, "is not an active store")
+      return false
+    end
+    return true
+  end
 end

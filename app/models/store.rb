@@ -18,14 +18,11 @@ class Store < ActiveRecord::Base
 
   # Validations
   # -----------------------------
-  # make sure required fields are present
   validates_presence_of :name, :street, :zip
-  # State must be PA, OH, or WV
-  validates_inclusion_of :state, in: %w[PA OH WV], message: "is not an option", allow_blank: true
-  # Unique Store name
   validates_uniqueness_of :name
-  # phone can have dashes, spaces, dots and parens, but must be 10 digits
+  validates_inclusion_of :state, in: %w[PA OH WV], message: "is not an option", allow_blank: true
   validates_format_of :phone, with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/, message: "should be 10 digits (area code needed) and delimited with dashes only"
+  validates_format_of :zip, with: /\A\d{5}\z/, message: "should be five digits long", allow_blank: true
 
   # Callback code
   # -----------------------------

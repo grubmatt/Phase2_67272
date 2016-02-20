@@ -1,7 +1,6 @@
 class Employee < ActiveRecord::Base
   # create a callback that will strip non-digits before saving to db
-  before_save :reformat_phone
-  before_save :reformat_ssn
+  before_save :reformat_phone, :reformat_ssn
 
 
   # Relationships
@@ -12,9 +11,9 @@ class Employee < ActiveRecord::Base
   # Scopes
   # -----------------------------
   # Returns employees under 18
-  scope :younger_than_18, -> { where("date_of_birth < ?", 18.years.ago) }
+  scope :younger_than_18, -> { where("date_of_birth > ?", 18.years.ago) }
   # Returns employees older then 18
-  scope :'18_or_older', -> { where("date_of_birth >= ?", 18.years.ago) }
+  scope :is_18_or_older, -> { where("date_of_birth <= ?", 18.years.ago) }
   # Returns active employess
   scope :active, -> { where(active: true) }
   # Returns inactive employees
@@ -30,8 +29,9 @@ class Employee < ActiveRecord::Base
 
   #Validations
   # -----------------------------
-  # make sure required fields are present
   validates_presence_of :first_name, :last_name, :date_of_birth, :role, :ssn
+  validates_format_of :phone, with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/, message: "should be 10 digits (area code needed) and delimited with dashes only"
+  validates_format_of :ssn, with: /\A(\d{9}|\(?\d{3}\)?[-. ]\d{2}[-.]\d{4})\z/, message: "should be 9 digits and delimited with dashes only"
 
   # Methods
   def name
@@ -43,15 +43,15 @@ class Employee < ActiveRecord::Base
   end
 
   def current_assignment
-    self.assignments.current.for_employee(self.employee_id)
+    self.assignments.current
   end
 
   def over_18?
-    date_of_birth >= 18.years.ago
+    date_of_birth <= 18.years.ago
   end
 
   def age
-    Time.now.year - date_of_birth.year
+    Date.today - date_of_birth
   end
 
   # Callback code
