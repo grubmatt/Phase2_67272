@@ -6,8 +6,8 @@ class Employee < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  has_many :assignment
-  has_many :store, through: :assignment
+  has_many :assignments
+  has_many :stores, through: :assignments
 
   # Scopes
   # -----------------------------
@@ -42,9 +42,9 @@ class Employee < ActiveRecord::Base
     first_name + " " + last_name
   end
 
-  #def current_assignment
-  #  active ? ##########################
-  #end
+  def current_assignment
+    self.assignments.current.for_employee(self.employee_id)
+  end
 
   def over_18?
     date_of_birth >= 18.years.ago

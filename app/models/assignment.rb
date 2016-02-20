@@ -4,8 +4,8 @@ class Assignment < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  belongs_to :employee
-  belongs_to :store
+  belongs_to :employees
+  belongs_to :stores
 
   # Scopes
   # -----------------------------
@@ -35,8 +35,10 @@ class Assignment < ActiveRecord::Base
   validates_presence_of :store_id, :employee_id, :start_date, :pay_level
 
   # Callback Code
-  #def end_previous_assignment
-
-  #end
+  def end_previous_assignment
+    current_assignment = assignments.current.for_employee(self.employee_id)
+    current_assignment.end_date = self.start_date
+    current_assignment.active = false
+  end
 
 end

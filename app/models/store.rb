@@ -4,8 +4,8 @@ class Store < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  has_many :assignment
-  has_many :employee, through: :assignment
+  has_many :assignments
+  has_many :employees, through: :assignments
 
   # Scopes
   # -----------------------------
@@ -24,6 +24,8 @@ class Store < ActiveRecord::Base
   validates_inclusion_of :state, in: %w[PA OH WV], message: "is not an option", allow_blank: true
   # Unique Store name
   validates_uniqueness_of :name
+  # phone can have dashes, spaces, dots and parens, but must be 10 digits
+  validates_format_of :phone, with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/, message: "should be 10 digits (area code needed) and delimited with dashes only"
 
   # Callback code
   # -----------------------------

@@ -8,7 +8,7 @@ module Contexts
   end
 
   def create_stores
-  	@cmu = FactoryGirl.create(:store)
+  	@cmu = FactoryGirl.create(:store, phone:"412-268-8211")
   	@pitt = FactoryGirl.create(:store, name: "PITT")
   	@mars = FactoryGirl.create(:store, name: "MARS TWP", active: false)
   end
