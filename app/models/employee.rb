@@ -33,6 +33,27 @@ class Employee < ActiveRecord::Base
   # make sure required fields are present
   validates_presence_of :first_name, :last_name, :date_of_birth, :role, :ssn
 
+  # Methods
+  def name
+    last_name + ", " + first_name
+  end
+
+  def proper_name
+    first_name + " " + last_name
+  end
+
+  #def current_assignment
+  #  active ? ##########################
+  #end
+
+  def over_18?
+    date_of_birth >= 18.years.ago
+  end
+
+  def age
+    Time.now.year - date_of_birth.year
+  end
+
   # Callback code
   # -----------------------------
    private

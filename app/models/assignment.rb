@@ -1,4 +1,7 @@
 class Assignment < ActiveRecord::Base
+  # create a callback that ends the previous assignment
+  #before_save :end_previous_assignment
+
   # Relationships
   # -----------------------------
   belongs_to :employee
@@ -31,5 +34,9 @@ class Assignment < ActiveRecord::Base
   # make sure required fields are present
   validates_presence_of :store_id, :employee_id, :start_date, :pay_level
 
+  # Callback Code
+  #def end_previous_assignment
+
+  #end
 
 end
