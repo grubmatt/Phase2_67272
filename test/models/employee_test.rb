@@ -31,6 +31,13 @@ class EmployeeTest < ActiveSupport::TestCase
    should_not allow_value("091-23-333s").for(:ssn)
    should_not allow_value("091/23/3330").for(:ssn)
 
+   # Validating legal age
+   should allow_value("2000-12-10").for(:date_of_birth)
+   should allow_value("19991230").for(:date_of_birth)
+
+   should_not allow_value("2010-12-4").for(:date_of_birth)
+   should_not allow_value("2003-12-4").for(:date_of_birth)
+
    context "creating four employees" do
      setup do
        @ty = FactoryGirl.create(:employee)

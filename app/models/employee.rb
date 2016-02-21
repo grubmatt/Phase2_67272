@@ -32,6 +32,7 @@ class Employee < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :date_of_birth, :role, :ssn
   validates_format_of :phone, with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/, message: "should be 10 digits (area code needed) and delimited with dashes only"
   validates_format_of :ssn, with: /\A(\d{9}|\(?\d{3}\)?[-. ]\d{2}[-.]\d{4})\z/, message: "should be 9 digits and delimited with dashes only"
+  validates_date :date_of_birth, :before => 14.years.ago
 
   # Methods
   def name
