@@ -4,15 +4,15 @@ class Assignment < ActiveRecord::Base
 
   # Relationships
   # -----------------------------
-  belongs_to :employees
-  belongs_to :stores
+  belongs_to :employee
+  belongs_to :store
 
   # Scopes
   # -----------------------------
   # Gets current assignments
-  scope :current, -> { where("end_date = ?", nil) }
+  scope :current, -> { where("end_date is null") }
   # Gets past assignments
-  scope :past, -> { where("end_date != ?", nil) }
+  scope :past, -> { where("end_date is not null") }
   # Returns all assignments for a given store
   scope :for_store, ->(store_id) { where("store_id = ?", store_id) }
   # Returns al assignments for a given employee
@@ -35,22 +35,27 @@ class Assignment < ActiveRecord::Base
   validates_presence_of :store_id, :employee_id, :start_date, :pay_level
   validate :employee_store_are_active
 
-  # Callback Code
-  def end_previous_assignment
-    current_assignment = Assignment.for_employee(self.employee_id).current
-    current_assignment.end_date = self.start_date
-  end
+  
 
   private
+  # Callback Code
+  def end_previous_assignment
+    current_assignment = Assignment.for_employee(self.employee_id).current.first
+    unless current_assignment == nil
+      current_assignment.update_attribute(:end_date, start_date)
+      current_assignment.save!
+    end
+  end
+
   def employee_store_are_active
     all_employee_ids = Employee.active.all.map{|i| i.id}
     all_store_ids = Store.active.all.map{|i| i.id}
     unless all_employee_ids.include?(self.employee_id)
-      errors.add(:employee, "is not an active employee")
+      errors.add(:assignment, "is not an active employee")
       return false
     end
     unless all_store_ids.include?(self.store_id)
-      errors.add(:store, "is not an active store")
+      errors.add(:assignment, "is not an active store")
       return false
     end
     return true

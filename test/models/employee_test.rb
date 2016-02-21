@@ -38,7 +38,7 @@ class EmployeeTest < ActiveSupport::TestCase
        @james = FactoryGirl.create(:employee, first_name: "James", phone: "412-268-8211", active: false)
        @alex = FactoryGirl.create(:employee, first_name: "Alex", last_name: "Heimann", date_of_birth: "1994-12-10", role:"admin")
        @cmu = FactoryGirl.create(:store, phone:"412-268-8211")
-       #@cmu_ty = FactoryGirl.create(:assignment, start_date: "2016-1-5", pay_level: 2)
+       @cmu_ty = FactoryGirl.create(:assignment, start_date: "2016-1-5", pay_level: 2)
      end
 
      teardown do
@@ -47,7 +47,7 @@ class EmployeeTest < ActiveSupport::TestCase
   	   @james.destroy
   	   @alex.destroy
        @cmu.destroy
-       #@cmu_ty.destroy
+       @cmu_ty.destroy
      end
 
      should "show that the factories were created correctly " do
@@ -104,9 +104,9 @@ class EmployeeTest < ActiveSupport::TestCase
     end
 
     # Testing method current_assignment
-    #should "show that current_assignment method works" do
-    #  assert_equal 2, @ty.current_assignment.pay_level
-    #end
+    should "show that current_assignment method works" do
+     assert_equal 1, @ty.current_assignment.id
+    end
 
     # Testing method over_18?
     should "show that over_18? works" do
@@ -114,9 +114,9 @@ class EmployeeTest < ActiveSupport::TestCase
     end
 
     # Testing method age
-    #should "show that age works" do
-    #  assert_equal , @terry.age 
-    #end
+    should "show that age works" do
+      assert_equal 26, @terry.age 
+    end
 
     # test the callback is working 'reformat_phone'
     should "shows that jame's phone is stripped of non-digits" do

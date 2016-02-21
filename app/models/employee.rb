@@ -32,6 +32,7 @@ class Employee < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :date_of_birth, :role, :ssn
   validates_format_of :phone, with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/, message: "should be 10 digits (area code needed) and delimited with dashes only"
   validates_format_of :ssn, with: /\A(\d{9}|\(?\d{3}\)?[-. ]\d{2}[-.]\d{4})\z/, message: "should be 9 digits and delimited with dashes only"
+  #validates :legal_age
 
   # Methods
   def name
@@ -43,7 +44,7 @@ class Employee < ActiveRecord::Base
   end
 
   def current_assignment
-    self.assignments.current
+    self.assignments.current.first
   end
 
   def over_18?
@@ -51,23 +52,30 @@ class Employee < ActiveRecord::Base
   end
 
   def age
-    Date.today - date_of_birth
+    Date.today.year - date_of_birth.year
   end
 
-  # Callback code
-  # -----------------------------
-   private
-     # We need to strip non-digits before saving to db
-     def reformat_phone
-       phone = self.phone.to_s  # change to string in case input as all numbers 
-       phone.gsub!(/[^0-9]/,"") # strip all non-digits
-       self.phone = phone       # reset self.phone to new string
-     end
-     # We need to strip non-digits before saving to db
-     def reformat_ssn
-       ssn = self.ssn.to_s      # change to string in case input as all numbers 
-       ssn.gsub!(/[^0-9]/,"")   # strip all non-digits
-       self.ssn = ssn           # reset self.ssn to new string
-     end
 
+  private
+  #Validation
+  def legal_age
+    unless date_of_birth <= 14.years.ago 
+      errors.add(:employee, "not old enough to work")
+      return false
+    end
+    return true
+  end
+  # Callback code
+  # We need to strip non-digits before saving to db
+  def reformat_phone
+    phone = self.phone.to_s  # change to string in case input as all numbers 
+    phone.gsub!(/[^0-9]/,"") # strip all non-digits
+    self.phone = phone       # reset self.phone to new string
+  end
+  # We need to strip non-digits before saving to db
+  def reformat_ssn
+    ssn = self.ssn.to_s      # change to string in case input as all numbers 
+    ssn.gsub!(/[^0-9]/,"")   # strip all non-digits
+    self.ssn = ssn           # reset self.ssn to new string
+  end
 end
