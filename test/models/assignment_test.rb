@@ -11,6 +11,15 @@ class AssignmentTest < ActiveSupport::TestCase
    should validate_presence_of(:pay_level)
    should validate_presence_of(:start_date)
 
+   # Validate pay_level
+   should allow_value(1).for(:pay_level)
+   should allow_value(3).for(:pay_level)
+   should allow_value(5).for(:pay_level)
+
+   should_not allow_value(0).for(:pay_level)
+   should_not allow_value(6).for(:pay_level)
+   should_not allow_value(7).for(:pay_level)
+
    context "Creating employees, stores, and assignments" do
      setup do
        @ty = FactoryGirl.create(:employee)
@@ -99,6 +108,10 @@ class AssignmentTest < ActiveSupport::TestCase
        assert_equal [3, 1, 4, 2], Assignment.chronological.map{|i| i.id}
      end
 
+     # Testing end_previous_assignment
+     should "ensure the previous assignment is ended correctly" do
+       assert_equal ["2016-1-5"], @cmu_ty.end_date
+     end
    end
 
 end

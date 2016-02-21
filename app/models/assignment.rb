@@ -24,10 +24,11 @@ class Assignment < ActiveRecord::Base
   # Return all values ordered by employee name
   scope :by_employee, -> { joins(:employee).order("employees.last_name, employees.first_name") }
   # Return assignments in chronological order
-  scope :chronological, -> { order("start_date") }
+  scope :chronological, -> { order("start_date, end_date") }
  
   # Validations
   validates_presence_of :store_id, :employee_id, :start_date, :pay_level
+  validates :pay_level, :numericality => { :greater_than => 0, :less_than => 6}
   validate :employee_is_active
   validate :store_is_active
 
@@ -35,8 +36,9 @@ class Assignment < ActiveRecord::Base
   # Callback Code
   def end_previous_assignment
     current_assignment = self.employee.current_assignment
-    if current_assignment != nil and current_assignment.start_date != self.start_date
-      current_assignment.update_attribute(:end_date, start_date)
+    if current_assignment and current_assignment.id != id
+      current_assignment.update_attribute(:end_date, self.start_date)
+      current_assignment.save!
     end
   end
 
