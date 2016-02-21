@@ -14,7 +14,7 @@
       <img src="./assets/0.10.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2016-02-21T17:19:57-05:00">2016-02-21T17:19:57-05:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2016-02-21T17:25:41-05:00">2016-02-21T17:25:41-05:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,7 +25,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         6.88
+         7.02
        </span>
     </span> hits/line)
   </h2>
@@ -137,7 +137,7 @@
         <td>35</td>
         <td>35</td>
         <td>0</td>
-        <td>34.6</td>
+        <td>35.0</td>
       </tr>
       
       <tr>
@@ -147,7 +147,7 @@
         <td>35</td>
         <td>35</td>
         <td>0</td>
-        <td>19.3</td>
+        <td>20.0</td>
       </tr>
       
       <tr>
@@ -157,7 +157,7 @@
         <td>17</td>
         <td>17</td>
         <td>0</td>
-        <td>17.5</td>
+        <td>17.8</td>
       </tr>
       
     </tbody>
@@ -250,7 +250,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         25.1
+         25.6
        </span>
     </span> hits/line)
   </h2>
@@ -282,7 +282,7 @@
         <td>35</td>
         <td>35</td>
         <td>0</td>
-        <td>34.6</td>
+        <td>35.0</td>
       </tr>
       
       <tr>
@@ -292,7 +292,7 @@
         <td>35</td>
         <td>35</td>
         <td>0</td>
-        <td>19.3</td>
+        <td>20.0</td>
       </tr>
       
       <tr>
@@ -302,7 +302,7 @@
         <td>17</td>
         <td>17</td>
         <td>0</td>
-        <td>17.5</td>
+        <td>17.8</td>
       </tr>
       
     </tbody>
@@ -2136,8 +2136,8 @@
           <code class="ruby">  # Gets current assignments</code>
         </li>
       
-        <li class="covered" data-hits="84" data-linenumber="11">
-          <span class="hits">84</span>
+        <li class="covered" data-hits="85" data-linenumber="11">
+          <span class="hits">85</span>
           
           <code class="ruby">  scope :current, -&gt; { where(&quot;end_date is null&quot;) }</code>
         </li>
@@ -2172,8 +2172,8 @@
           <code class="ruby">  # Returns al assignments for a given employee</code>
         </li>
       
-        <li class="covered" data-hits="83" data-linenumber="17">
-          <span class="hits">83</span>
+        <li class="covered" data-hits="84" data-linenumber="17">
+          <span class="hits">84</span>
           
           <code class="ruby">  scope :for_employee, -&gt;(employee_id) { where(&quot;employee_id = ?&quot;, employee_id) }</code>
         </li>
@@ -2298,14 +2298,14 @@
           <code class="ruby">  def end_previous_assignment</code>
         </li>
       
-        <li class="covered" data-hits="81" data-linenumber="38">
-          <span class="hits">81</span>
+        <li class="covered" data-hits="82" data-linenumber="38">
+          <span class="hits">82</span>
           
           <code class="ruby">    current_assignment = Assignment.for_employee(employee_id).current.first</code>
         </li>
       
-        <li class="covered" data-hits="81" data-linenumber="39">
-          <span class="hits">81</span>
+        <li class="covered" data-hits="82" data-linenumber="39">
+          <span class="hits">82</span>
           
           <code class="ruby">    if current_assignment and current_assignment.id != id</code>
         </li>
@@ -2346,14 +2346,14 @@
           <code class="ruby">  def employee_is_active</code>
         </li>
       
-        <li class="covered" data-hits="290" data-linenumber="46">
-          <span class="hits">290</span>
+        <li class="covered" data-hits="294" data-linenumber="46">
+          <span class="hits">294</span>
           
           <code class="ruby">    all_employee_ids = Employee.active.all.map{|i| i.id}</code>
         </li>
       
-        <li class="covered" data-hits="80" data-linenumber="47">
-          <span class="hits">80</span>
+        <li class="covered" data-hits="81" data-linenumber="47">
+          <span class="hits">81</span>
           
           <code class="ruby">    unless all_employee_ids.include?(self.employee_id)</code>
         </li>
@@ -2376,8 +2376,8 @@
           <code class="ruby">    end</code>
         </li>
       
-        <li class="covered" data-hits="70" data-linenumber="51">
-          <span class="hits">70</span>
+        <li class="covered" data-hits="71" data-linenumber="51">
+          <span class="hits">71</span>
           
           <code class="ruby">    return true</code>
         </li>
@@ -2394,14 +2394,14 @@
           <code class="ruby">  def store_is_active</code>
         </li>
       
-        <li class="covered" data-hits="205" data-linenumber="54">
-          <span class="hits">205</span>
+        <li class="covered" data-hits="207" data-linenumber="54">
+          <span class="hits">207</span>
           
           <code class="ruby">    all_store_ids = Store.active.all.map{|i| i.id}</code>
         </li>
       
-        <li class="covered" data-hits="80" data-linenumber="55">
-          <span class="hits">80</span>
+        <li class="covered" data-hits="81" data-linenumber="55">
+          <span class="hits">81</span>
           
           <code class="ruby">    unless all_store_ids.include?(self.store_id)</code>
         </li>
@@ -2424,8 +2424,8 @@
           <code class="ruby">    end</code>
         </li>
       
-        <li class="covered" data-hits="70" data-linenumber="59">
-          <span class="hits">70</span>
+        <li class="covered" data-hits="71" data-linenumber="59">
+          <span class="hits">71</span>
           
           <code class="ruby">    return true</code>
         </li>
@@ -2562,8 +2562,8 @@
           <code class="ruby">  # Returns active employess</code>
         </li>
       
-        <li class="covered" data-hits="82" data-linenumber="18">
-          <span class="hits">82</span>
+        <li class="covered" data-hits="83" data-linenumber="18">
+          <span class="hits">83</span>
           
           <code class="ruby">  scope :active, -&gt; { where(active: true) }</code>
         </li>
@@ -2832,20 +2832,20 @@
           <code class="ruby">  def reformat_phone</code>
         </li>
       
-        <li class="covered" data-hits="93" data-linenumber="63">
-          <span class="hits">93</span>
+        <li class="covered" data-hits="97" data-linenumber="63">
+          <span class="hits">97</span>
           
           <code class="ruby">    phone = self.phone.to_s  # change to string in case input as all numbers </code>
         </li>
       
-        <li class="covered" data-hits="93" data-linenumber="64">
-          <span class="hits">93</span>
+        <li class="covered" data-hits="97" data-linenumber="64">
+          <span class="hits">97</span>
           
           <code class="ruby">    phone.gsub!(/[^0-9]/,&quot;&quot;) # strip all non-digits</code>
         </li>
       
-        <li class="covered" data-hits="93" data-linenumber="65">
-          <span class="hits">93</span>
+        <li class="covered" data-hits="97" data-linenumber="65">
+          <span class="hits">97</span>
           
           <code class="ruby">    self.phone = phone       # reset self.phone to new string</code>
         </li>
@@ -2868,20 +2868,20 @@
           <code class="ruby">  def reformat_ssn</code>
         </li>
       
-        <li class="covered" data-hits="93" data-linenumber="69">
-          <span class="hits">93</span>
+        <li class="covered" data-hits="97" data-linenumber="69">
+          <span class="hits">97</span>
           
           <code class="ruby">    ssn = self.ssn.to_s      # change to string in case input as all numbers </code>
         </li>
       
-        <li class="covered" data-hits="93" data-linenumber="70">
-          <span class="hits">93</span>
+        <li class="covered" data-hits="97" data-linenumber="70">
+          <span class="hits">97</span>
           
           <code class="ruby">    ssn.gsub!(/[^0-9]/,&quot;&quot;)   # strip all non-digits</code>
         </li>
       
-        <li class="covered" data-hits="93" data-linenumber="71">
-          <span class="hits">93</span>
+        <li class="covered" data-hits="97" data-linenumber="71">
+          <span class="hits">97</span>
           
           <code class="ruby">    self.ssn = ssn           # reset self.ssn to new string</code>
         </li>
@@ -2988,8 +2988,8 @@
           <code class="ruby">  # Returns active stores</code>
         </li>
       
-        <li class="covered" data-hits="82" data-linenumber="13">
-          <span class="hits">82</span>
+        <li class="covered" data-hits="83" data-linenumber="13">
+          <span class="hits">83</span>
           
           <code class="ruby">  scope :active, -&gt; { where(active: true) }</code>
         </li>
@@ -3102,20 +3102,20 @@
           <code class="ruby">     def reformat_phone</code>
         </li>
       
-        <li class="covered" data-hits="67" data-linenumber="32">
-          <span class="hits">67</span>
+        <li class="covered" data-hits="68" data-linenumber="32">
+          <span class="hits">68</span>
           
           <code class="ruby">       phone = self.phone.to_s  # change to string in case input as all numbers </code>
         </li>
       
-        <li class="covered" data-hits="67" data-linenumber="33">
-          <span class="hits">67</span>
+        <li class="covered" data-hits="68" data-linenumber="33">
+          <span class="hits">68</span>
           
           <code class="ruby">       phone.gsub!(/[^0-9]/,&quot;&quot;) # strip all non-digits</code>
         </li>
       
-        <li class="covered" data-hits="67" data-linenumber="34">
-          <span class="hits">67</span>
+        <li class="covered" data-hits="68" data-linenumber="34">
+          <span class="hits">68</span>
           
           <code class="ruby">       self.phone = phone       # reset self.phone to new string</code>
         </li>

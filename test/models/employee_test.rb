@@ -41,7 +41,7 @@ class EmployeeTest < ActiveSupport::TestCase
    context "creating four employees" do
      setup do
        @ty = FactoryGirl.create(:employee)
-       @terry = FactoryGirl.create(:employee, first_name: "Terry", date_of_birth: "1990-2-1", role:"manager")
+       @terry = FactoryGirl.create(:employee, first_name: "Terry", date_of_birth: "1990-2-1", ssn: "092-32-5918", role:"manager")
        @james = FactoryGirl.create(:employee, first_name: "James", phone: "412-268-8211", active: false)
        @alex = FactoryGirl.create(:employee, first_name: "Alex", last_name: "Heimann", date_of_birth: "1994-12-10", role:"admin")
        @cmu = FactoryGirl.create(:store, phone:"412-268-8211")
@@ -133,6 +133,11 @@ class EmployeeTest < ActiveSupport::TestCase
     # test the callback is working 'reformat_phone'
     should "shows that jame's phone is stripped of non-digits" do
       assert_equal "4122688211", @james.phone
+    end
+
+    # test the callback is working 'reformat_ssn'
+    should "shows that terry's ssn is stripped of non-digits" do
+      assert_equal "092325918", @terry.ssn
     end
    end
 end
