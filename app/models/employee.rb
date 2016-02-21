@@ -32,7 +32,6 @@ class Employee < ActiveRecord::Base
   validates_presence_of :first_name, :last_name, :date_of_birth, :role, :ssn
   validates_format_of :phone, with: /\A(\d{10}|\(?\d{3}\)?[-. ]\d{3}[-.]\d{4})\z/, message: "should be 10 digits (area code needed) and delimited with dashes only"
   validates_format_of :ssn, with: /\A(\d{9}|\(?\d{3}\)?[-. ]\d{2}[-.]\d{4})\z/, message: "should be 9 digits and delimited with dashes only"
-  #validates :legal_age
 
   # Methods
   def name
@@ -57,14 +56,6 @@ class Employee < ActiveRecord::Base
 
 
   private
-  #Validation
-  def legal_age
-    unless date_of_birth <= 14.years.ago 
-      errors.add(:employee, "not old enough to work")
-      return false
-    end
-    return true
-  end
   # Callback code
   # We need to strip non-digits before saving to db
   def reformat_phone

@@ -3,12 +3,10 @@ class Assignment < ActiveRecord::Base
   before_save :end_previous_assignment
 
   # Relationships
-  # -----------------------------
   belongs_to :employee
   belongs_to :store
 
   # Scopes
-  # -----------------------------
   # Gets current assignments
   scope :current, -> { where("end_date is null") }
   # Gets past assignments
@@ -20,30 +18,24 @@ class Assignment < ActiveRecord::Base
   # Return all assignments for a given pay level
   scope :for_pay_level, ->(pay_level) { where("pay_level = ?", pay_level) }
   # Return all assignments for a given role
-  scope :for_role, ->(role) { where("role = ?", role) }
+  scope :for_role, ->(role) { joins(:employee).where("employees.role = ?", role) }
   # Return all values ordered by store
-  scope :by_store, -> { joins(:store).order('store.name') }
+  scope :by_store, -> { joins(:store).order('stores.name') }
   # Return all values ordered by employee name
-  scope :by_employee, -> { joins(:employee).order("employee.last_name, employee.first_name") }
+  scope :by_employee, -> { joins(:employee).order("employees.last_name, employees.first_name") }
   # Return assignments in chronological order
-  scope :chronological, -> { order("start_date DSC") }
+  scope :chronological, -> { order("start_date DESC") }
  
-
   # Validations
-  # -----------------------------
-  # make sure required fields are present
   validates_presence_of :store_id, :employee_id, :start_date, :pay_level
   validate :employee_store_are_active
-
-  
 
   private
   # Callback Code
   def end_previous_assignment
-    current_assignment = Assignment.for_employee(self.employee_id).current.first
+    current_assignment = self.employee.current_assignment
     unless current_assignment == nil
-      current_assignment.update_attribute(:end_date, start_date)
-      current_assignment.save!
+      current_assignment.update(end_date: start_date)
     end
   end
 

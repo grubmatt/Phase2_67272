@@ -31,6 +31,16 @@ class StoreTest < ActiveSupport::TestCase
   should_not allow_value("412/268/3259").for(:phone)
   should_not allow_value("412-2683-259").for(:phone)
 
+  #Validating zip
+  should allow_value("03431").for(:zip)
+  should allow_value("15217").for(:zip)
+  should allow_value("15090").for(:zip)
+  
+  should_not allow_value("fred").for(:zip)
+  should_not allow_value("3431").for(:zip)
+  should_not allow_value("15213-9843").for(:zip)
+  should_not allow_value("15d32").for(:zip)
+
   context "Creating 3 stores"  do
   	setup do
   	  @cmu = FactoryGirl.create(:store, phone:"412-268-8211")
@@ -53,6 +63,12 @@ class StoreTest < ActiveSupport::TestCase
       assert !@mars.active
     end
 
+    # test uniqueness of name
+    should "be a unique name" do
+      @cmu2 = FactoryGirl.build(:store)
+      assert !@cmu2.valid?
+    end
+
     # test the scope 'alphabetical'
     should "shows that there are three stores in alphabetical order" do
       assert_equal ["CMU", "MARS TWP", "PITT"], Store.alphabetical.map{|o| o.name}
@@ -60,13 +76,11 @@ class StoreTest < ActiveSupport::TestCase
 
     # test the scope 'active'
     should "shows that there are two active stores" do
-      assert_equal 2, Store.active.size
       assert_equal ["CMU", "PITT"], Store.active.map{|o| o.name}.sort
     end
 
     # test the scope 'inactive'
     should "shows that there is one inactive stores" do
-      assert_equal 1, Store.inactive.size
       assert_equal ["MARS TWP"], Store.inactive.map{|o| o.name}
     end
 

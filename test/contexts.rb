@@ -14,9 +14,9 @@ module Contexts
   end
 
   def create_assignments
-  	@cmu_ty = FactoryGirl.create(:assignment, start_date: "2016-1-5", pay_level: 2)
-  	@cmu_ty2 = FactoryGirl.create(:assignment, end_date: "2016-1-5")
-  	@mars_alex = FactoryGirl.create(:assignment, start_date: "2014-1-5", end_date: "2015-3-1", employee_id: 4, store_id: 3)
+  	@cmu_ty = FactoryGirl.create(:assignment)
+    @cmu_ty2 = FactoryGirl.create(:assignment, start_date: "2016-1-5", pay_level: 2)
+  	@pitt_alex = FactoryGirl.create(:assignment, start_date: "2014-1-5", employee_id: 4, store_id: 2)
  	  @pitt_terry = FactoryGirl.create(:assignment, start_date: "2015-10-9", employee_id: 2, store_id: 2)
   end
 
