@@ -24,8 +24,8 @@ class Employee < ActiveRecord::Base
   scope :managers, -> { where("role = ?", 'manager') }
   # Returns employees with the role admin
   scope :admins, -> { where("role = ?", 'admin') }
-  # Orders results alphabetically
-  scope :alphabetical, -> { order("name") }
+  # Orders results alphabetically by last then first name
+  scope :alphabetical, -> { order("last_name, first_name") }
 
   #Validations
   # -----------------------------

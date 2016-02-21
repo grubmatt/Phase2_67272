@@ -93,6 +93,11 @@ class EmployeeTest < ActiveSupport::TestCase
       assert_equal ["Alex"], Employee.admins.map{|i| i.first_name}
     end
 
+    # Testing scope alphabetical
+    should "Return employees alphabetically by name" do
+      assert_equal ["Alex", "James", "Terry", "Tyler"], Employee.alphabetical.map{|i| i.first_name}
+    end
+
     # Testing method name
     should "shows that name method works" do
       assert_equal "Heimann, Alex", @alex.name
@@ -105,7 +110,7 @@ class EmployeeTest < ActiveSupport::TestCase
 
     # Testing method current_assignment
     should "show that current_assignment method works" do
-     assert_equal 1, @ty.current_assignment.id
+      assert_equal 1, @ty.current_assignment.id
     end
 
     # Testing method over_18?

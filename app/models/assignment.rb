@@ -24,28 +24,32 @@ class Assignment < ActiveRecord::Base
   # Return all values ordered by employee name
   scope :by_employee, -> { joins(:employee).order("employees.last_name, employees.first_name") }
   # Return assignments in chronological order
-  scope :chronological, -> { order("start_date DESC") }
+  scope :chronological, -> { order("start_date") }
  
   # Validations
   validates_presence_of :store_id, :employee_id, :start_date, :pay_level
-  validate :employee_store_are_active
+  validate :employee_is_active
+  validate :store_is_active
 
   private
   # Callback Code
   def end_previous_assignment
     current_assignment = self.employee.current_assignment
-    unless current_assignment == nil
-      current_assignment.update(end_date: start_date)
+    if current_assignment != nil and current_assignment.start_date != self.start_date
+      current_assignment.update_attribute(:end_date, start_date)
     end
   end
 
-  def employee_store_are_active
+  def employee_is_active
     all_employee_ids = Employee.active.all.map{|i| i.id}
-    all_store_ids = Store.active.all.map{|i| i.id}
     unless all_employee_ids.include?(self.employee_id)
       errors.add(:assignment, "is not an active employee")
       return false
     end
+    return true
+  end
+  def store_is_active
+    all_store_ids = Store.active.all.map{|i| i.id}
     unless all_store_ids.include?(self.store_id)
       errors.add(:assignment, "is not an active store")
       return false

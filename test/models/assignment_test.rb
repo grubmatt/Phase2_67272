@@ -20,7 +20,7 @@ class AssignmentTest < ActiveSupport::TestCase
        @pitt = FactoryGirl.create(:store, name: "PITT")
        @mars = FactoryGirl.create(:store, name: "MARS TWP", active: false)
        @cmu_ty = FactoryGirl.create(:assignment)
-       #@cmu_ty2 = FactoryGirl.create(:assignment, start_date: "2016-1-5", pay_level: 2)
+       @cmu_ty2 = FactoryGirl.create(:assignment, start_date: "2016-1-5", pay_level: 2)
        @pitt_alex = FactoryGirl.create(:assignment, start_date: "2014-1-5", employee_id: 3, store_id: 2, pay_level: 5)
        @pitt_terry = FactoryGirl.create(:assignment, start_date: "2015-10-9", employee_id: 2, store_id: 2, pay_level: 3)
      end
@@ -33,7 +33,7 @@ class AssignmentTest < ActiveSupport::TestCase
        @pitt.destroy
        @mars.destroy
        @cmu_ty.destroy
-       #@cmu_ty2.destroy
+       @cmu_ty2.destroy
        @pitt_alex.destroy
        @pitt_terry.destroy
      end
@@ -46,7 +46,7 @@ class AssignmentTest < ActiveSupport::TestCase
        assert_equal "PITT", @pitt.name
        assert_equal "MARS TWP", @mars.name
        assert_equal 1, @cmu_ty.pay_level
-       # assert_equal 2, @cmu_ty2.pay_level
+       assert_equal 2, @cmu_ty2.pay_level
        assert_equal 3, @pitt_alex.employee_id
        assert_equal 2, @pitt_terry.employee_id
        assert @cmu.active
@@ -56,13 +56,13 @@ class AssignmentTest < ActiveSupport::TestCase
 
      # Testing scope current
      should "return all the current assignments" do
-       assert_equal [1, 3, 5], Assignment.current.map{|i| i.pay_level}.sort
+       assert_equal [2, 3, 5], Assignment.current.map{|i| i.pay_level}.sort
      end
 
      # Testing scope past
-     # should "return all the past assignments" do
-     #   assert_equal [1], Assignment.past.map{|i| i.pay_level}.sort
-     # end
+     should "return all the past assignments" do
+       assert_equal [1], Assignment.past.map{|i| i.pay_level}.sort
+     end
 
      # Testing scope for_store
      should "return all assignments for a store" do
@@ -86,17 +86,17 @@ class AssignmentTest < ActiveSupport::TestCase
 
      # Testing scope by_store
      should "return all assignments in order of store name" do
-       assert_equal [1, 2, 2], Assignment.by_store.map{|i| i.store_id}
+       assert_equal [1, 1, 2, 2], Assignment.by_store.map{|i| i.store_id}
      end
 
      # Testing scope by_employee
      should "return all assignments in order of employee names" do
-       assert_equal [3, 2, 1], Assignment.by_employee.map{|i| i.employee_id}
+       assert_equal [3, 2, 1, 1], Assignment.by_employee.map{|i| i.employee_id}
      end
 
      # Testing scope chronological
      should "return assignments chronologically" do
-       assert_equal [2, 1, 3], Assignment.chronological.map{|i| i.employee_id}
+       assert_equal [3, 1, 4, 2], Assignment.chronological.map{|i| i.id}
      end
 
    end
