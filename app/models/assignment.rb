@@ -35,9 +35,9 @@ class Assignment < ActiveRecord::Base
   private
   # Callback Code
   def end_previous_assignment
-    current_assignment = self.employee.current_assignment
+    current_assignment = Assignment.for_employee(employee_id).current.first
     if current_assignment and current_assignment.id != id
-      current_assignment.update_attribute(:end_date, self.start_date)
+      current_assignment.update_attribute(:end_date, start_date)
       current_assignment.save!
     end
   end

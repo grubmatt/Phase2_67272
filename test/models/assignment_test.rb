@@ -110,7 +110,8 @@ class AssignmentTest < ActiveSupport::TestCase
 
      # Testing end_previous_assignment
      should "ensure the previous assignment is ended correctly" do
-       assert_equal ["2016-1-5"], @cmu_ty.end_date
+       @cmu_ty.reload
+       assert_equal Date.new(2016,1,5), @cmu_ty.end_date
      end
    end
 
